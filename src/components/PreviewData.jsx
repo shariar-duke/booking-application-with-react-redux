@@ -1,7 +1,10 @@
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import { useSelector } from "react-redux";
+import { deleteBooking } from "../redux/flightBooking/actions"
+import { useSelector, useDispatch } from "react-redux";
 export default function PreviewData() {
     const flightList = useSelector((state) => state.value);
+    const dispatch = useDispatch()
+    console.log("Flight lists are", flightList)
 
     // Function to format date as dd-mm-yy
     const formatDate = (dateString) => {
@@ -11,6 +14,13 @@ export default function PreviewData() {
         const year = date.getFullYear().toString().slice(2); // Get last two digits of the year
         return `${day}-${month}-${year}`;
     };
+
+    // dispatching the action to delete the flight
+
+    const deleteFlight = (id) => {
+
+        dispatch(deleteBooking(id))
+    }
     return (
         <div className="bg-white rounded-md overflow-hidden">
             <table className="w-full table-auto">
@@ -53,7 +63,7 @@ export default function PreviewData() {
                                     }</span>
                                 </td>
                                 <td className="px-6 py-4">
-                                    <RiDeleteBin6Fill className="cursor-pointer" color="red" fontSize={22} />
+                                    <RiDeleteBin6Fill onClick={() => deleteFlight(singleFlightData.id)} className="cursor-pointer" color="red" fontSize={22} />
                                 </td>
                             </tr>
                         )
