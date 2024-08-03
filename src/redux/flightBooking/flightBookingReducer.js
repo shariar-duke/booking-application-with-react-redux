@@ -18,13 +18,21 @@ const initialState = {
 const flightReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADDBOOKING:
-            return {
-                ...state,
-                value: [
-                    ...state.value,
-                    action.payload
-                ]
-            };
+
+            if (state.value.length >= 3) {
+                return state
+            }
+            else {
+                return {
+                    ...state,
+                    value: [
+                        ...state.value,
+                        action.payload
+                    ]
+                };
+            }
+
+
         case DELETEBOOKING:
             return {
                 ...state,
