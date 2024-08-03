@@ -3,8 +3,13 @@ import guestIcon from "../assets/guestIcon.svg";
 import flightClass from "../assets/flightClass.svg"
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from 'uuid'; // Import UUID
+import { addBooking } from "../redux/flightBooking/actions"
 export default function InputData() {
+
+    // dispatch the the function
+    const dispatch = useDispatch()
     const [formData, setFormData] = useState({
         id: uuidv4(),
         destinationForm: '',
@@ -23,10 +28,7 @@ export default function InputData() {
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-
-
-        console.log("the formData is now is", formData)
-
+        dispatch(addBooking(formData))
     }
 
 
