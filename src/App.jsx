@@ -1,6 +1,7 @@
 import Header from "./components/Header"
 import backgroundImg from "./assets/Hero-Banner.webp"
 import InputData from "./components/InputData"
+import PreviewData from "./components/PreviewData"
 export default function App() {
   return (
     <div
@@ -15,6 +16,7 @@ export default function App() {
       <div className="relative z-50 flex justify-center items-center h-[calc(90vh-80px)]">
         <div className="flex flex-col gap-[40px]">
           <InputData />
+          <PreviewData />
         </div>
       </div>
     </div>
