@@ -11,7 +11,6 @@ export default function InputData() {
     // dispatch the the function
     const dispatch = useDispatch()
     const [formData, setFormData] = useState({
-        id: uuidv4(),
         destinationForm: '',
         destinationTo: '',
         journeyDate: '',
@@ -28,7 +27,8 @@ export default function InputData() {
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(addBooking(formData))
+        const newFormData = { ...formData, id: uuidv4() }
+        dispatch(addBooking(newFormData))
     }
 
 
