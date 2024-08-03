@@ -1,5 +1,16 @@
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import { useSelector } from "react-redux";
 export default function PreviewData() {
+    const flightList = useSelector((state) => state.value);
+
+    // Function to format date as dd-mm-yy
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0'); // Get day and pad with zero if needed
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Get month and pad with zero if needed
+        const year = date.getFullYear().toString().slice(2); // Get last two digits of the year
+        return `${day}-${month}-${year}`;
+    };
     return (
         <div className="bg-white rounded-md overflow-hidden">
             <table className="w-full table-auto">
@@ -14,28 +25,40 @@ export default function PreviewData() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="lws-bookedTable text-black">
-                        <td className="px-6 py-4">
-                            <div className="flex items-center space-x-3">
-                                <p className="lws-bookedFrom">Dhaka</p>
-                            </div>
-                        </td>
-                        <td className="px-6 py-4">
-                            <p className="lws-bookedTo">Sylhet</p>
-                        </td>
-                        <td className="flex justify-start px-6 py-4 text-center">
-                            <p>11-01-23</p>
-                        </td>
-                        <td className="pr-14 py-4 text-center">
-                            <p>2</p>
-                        </td>
-                        <td className="px-6 py-4">
-                            <span>Business</span>
-                        </td>
-                        <td className="px-6 py-4">
-                            <RiDeleteBin6Fill color="red" fontSize={22} />
-                        </td>
-                    </tr>
+                    {
+                        flightList && flightList.map((singleFlightData) =>
+                            <tr key={singleFlightData.id} className="lws-bookedTable text-black">
+                                <td className="px-6 py-4">
+                                    <div className="flex items-center space-x-3">
+                                        <p className="lws-bookedFrom">{singleFlightData.destinationForm
+                                            ?? "-"}</p>
+                                    </div>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <p className="lws-bookedTo">{singleFlightData.destinationTo
+                                        ?? "-"}</p>
+                                </td>
+                                <td className="flex justify-start px-6 py-4 text-center">
+                                    <p>{formatDate(singleFlightData.journeyDate)}</p>
+                                </td>
+                                <td className="pr-14 py-4 text-center">
+                                    <p>{singleFlightData.
+                                        numberOfGuests ?? "-"
+                                    }</p>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <span>{
+                                        singleFlightData.flightClass ?? "-"
+
+                                    }</span>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <RiDeleteBin6Fill className="cursor-pointer" color="red" fontSize={22} />
+                                </td>
+                            </tr>
+                        )
+                    }
+
                 </tbody>
             </table>
         </div>
